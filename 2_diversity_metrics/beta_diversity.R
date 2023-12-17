@@ -149,10 +149,6 @@ PD_jac <- plot_ordination(parkinsons_rare, pcoa_jac_PD, color = "Disease") +
   ggtitle("Jaccard Disease") + theme(plot.title = element_text(hjust = 0.5)) +
   guides(fill = "none") 
 PD_jac <- plot_grid(PD_jac, labels = c('G'))
-
-ggsave("PD_jac_pcoa.png"
-       , PD_jac
-       , height=4, width=6)
 PD_jac
 
 dep_anxiety_sleep_disease_together <- grid.arrange(depression_jac, anxiety_jac,Sleep_problems_jac, PD_jac, ncol = 1)
