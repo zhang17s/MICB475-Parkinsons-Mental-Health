@@ -116,3 +116,4 @@ save(parkinsons_final_sleep, file="1_make_phyloseq_object/parkinsons_final_sleep
 parkinsons_final_depression <- subset_samples(parkinsons_rare, !is.na(depression_binned))
 View(sample_data(parkinsons_final_depression))
 save(parkinsons_final_depression, file="1_make_phyloseq_object/parkinsons_final_depression.RData")
+
