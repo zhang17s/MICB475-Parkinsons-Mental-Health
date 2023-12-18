@@ -6,7 +6,7 @@ library(vegan)
 library(cowplot)
 library(gridExtra)
 
-############ Anxiety ###########
+################ Anxiety ################ 
 ### Load anxiety phyloseq Object 
 load("1_make_phyloseq_object/parkinsons_final_anxiety.RData")
 
@@ -95,15 +95,14 @@ adonis2(jac_dm_ctrl ~ `depression_binned`, data = samp_dat_wdiv_Ctrl)
 depression_jac <- plot_grid(PD_depression_jac, ctrl_depression_jac, labels = c('A', 'B'))
 depression_jac
 
-######## Sleep problems ########
+################ Sleep problems ################ 
 load("1_make_phyloseq_object/parkinsons_final_sleep.RData")
-parkinsons_final_sleep <- subset_samples(parkinsons_final_sleep, !is.na(Sleep_problems))
 
 #Filter out PD patients 
-PD_patients <- subset_samples(parkinsons_final_sleep_problems , `Disease` == "PD")
+PD_patients <- subset_samples(parkinsons_final_sleep, `Disease` == "PD")
 
 #Filter out control
-Ctrl_patients <- subset_samples(parkinsons_final_sleep_problems , `Disease` == "Control")
+Ctrl_patients <- subset_samples(parkinsons_final_sleep, `Disease` == "Control")
 
 ###Data frame 
 #PD
@@ -138,10 +137,13 @@ adonis2(jac_dm_ctrl ~ `Sleep_problems`, data = samp_dat_wdiv_Ctrl)
 
 Sleep_problems_jac <- plot_grid(PD_Sleep_problems_jac, ctrl_Sleep_problems_jac, labels = c('E', 'F'))
 Sleep_problems_jac
-##### PD #####
 
+
+################ PD Disease ################ 
 ## Jaccard ## 
 #PD patients
+load("1_make_phyloseq_object/parkinsons_edited_rare.RData")
+
 jac_dm <- distance(parkinsons_rare, method = "jaccard", binary = T)
 pcoa_jac_PD <- ordinate(parkinsons_rare, method = "NMDS", distance = jac_dm)
 PD_jac <- plot_ordination(parkinsons_rare, pcoa_jac_PD, color = "Disease") +
@@ -153,6 +155,6 @@ PD_jac
 
 dep_anxiety_sleep_disease_together <- grid.arrange(depression_jac, anxiety_jac,Sleep_problems_jac, PD_jac, ncol = 1)
 dep_anxiety_sleep_disease_together
-ggsave("Jac_Pcoa.png"
+ggsave("2_diversity_metrics/Supplementary_Fig3_Jac_Pcoa.png"
        , dep_anxiety_sleep_disease_together
        , height=15, width=10)
